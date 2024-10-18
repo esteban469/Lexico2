@@ -3,19 +3,20 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Lexico2
+namespace Lexico_2
 {
     public class Token
     {
         public enum Tipos
         {
-            Identificador, Numero, Caracter, FinSentencia, InicioBloque, FinBloque, OperadorTermino, OperadorTernario,
-            OperadorFactor, IncrementoTermino, IncrementoFactor, Puntero, Asignacion, OperadorRelacional, OperadorLogico, moneda, Cadena
-            
-
+            Identificador, Numero, Caracter, FinSentencia,
+            InicioBloque, FinBloque, OperadorTernario,
+            OperadorTermino, OperadorFactor, IncrementoTermino,
+            IncrementoFactor, Puntero, Asignacion,
+            OperadorRelacional, OperadorLogico, Cadena
         }
-        public string contenido;
-        public Tipos clasificacion;
+        private string contenido;
+        private Tipos clasificacion;
         public Token()
         {
             contenido = "";

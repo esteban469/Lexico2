@@ -3,25 +3,23 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Lexico1
+namespace Lexico_2
 {
     class Program
     {
         static void Main(string[] args)
         {
-
             try
             {
-                using (Lexico l = new Lexico())
+                using (Lexico lexico = new Lexico())
                 {
-                    while (!l.finArchivo())
+                    while (!lexico.finArchivo())
                     {
-
-                        l.nextToken();
-
+                        lexico.nextToken();
                     }
+                    lexico.log.WriteLine("\n-----------------------------------\n");
+                    lexico.log.WriteLine("Líneas del archivo: " + lexico.linea);
                 }
-
             }
             catch (Exception e)
             {

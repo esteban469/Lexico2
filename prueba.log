@@ -1,0 +1,12 @@
+# = Caracter
+include = Identificador
+< = OperadorRelacional
+stdio = Identificador
+> = OperadorRelacional
+{ = InicioBloque
+230 = Numero
+// Numero entero230e-30 = Numero
+
+-----------------------------------
+
+Líneas del archivo: 5
