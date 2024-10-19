@@ -66,6 +66,7 @@ namespace Lexico_2
         private int automata(char c, int estado)
         {
             int nuevoEstado = estado;
+            
             switch (estado)
             {
                 case 0:
@@ -88,6 +89,10 @@ namespace Lexico_2
                     else if (c == '}')
                     {
                         nuevoEstado = 10;
+                    }
+                    else if (c == ';')
+                    {
+                        nuevoEstado = 8;
                     }
                     else if (c == '?')
                     {
@@ -239,7 +244,7 @@ namespace Lexico_2
                     }
                     break;
                 case 8:
-                    setClasificacion(Tipos.Caracter);
+                    setClasificacion(Tipos.FinSentencia);
                     nuevoEstado = F;
                     break;
 
@@ -264,7 +269,10 @@ namespace Lexico_2
                     {
                         nuevoEstado = 13;
                     }
-                    nuevoEstado = F;
+                    else
+                    {
+                        nuevoEstado = F;
+                    }
                     break;
 
                 case 13:
@@ -278,11 +286,14 @@ namespace Lexico_2
                     {
                         nuevoEstado = 13;
                     }
-                    if (c == '>')
+                    else if (c == '>')
                     {
                         nuevoEstado = 15;
                     }
-                    nuevoEstado = F;
+                    else
+                    {
+                        nuevoEstado = F;
+                    }
                     break;
 
                 case 15:
@@ -296,7 +307,10 @@ namespace Lexico_2
                     {
                         nuevoEstado = 17;
                     }
-                    nuevoEstado = F;
+                    else
+                    {
+                        nuevoEstado = F;
+                    }
                     break;
 
                 case 17:
@@ -310,7 +324,10 @@ namespace Lexico_2
                     {
                         nuevoEstado = 19;
                     }
-                    nuevoEstado = F;
+                    else
+                    {
+                        nuevoEstado = F;
+                    }
                     break;
 
                 case 19:
@@ -324,7 +341,10 @@ namespace Lexico_2
                     {
                         nuevoEstado = 19;
                     }
-                    nuevoEstado = F;
+                    else
+                    {
+                        nuevoEstado = F;
+                    }
                     break;
 
                 case 21:
@@ -333,7 +353,10 @@ namespace Lexico_2
                     {
                         nuevoEstado = 22;
                     }
-                    nuevoEstado = F;
+                    else
+                    {
+                        nuevoEstado = F;
+                    }
                     break;
 
                 case 22:
@@ -347,7 +370,10 @@ namespace Lexico_2
                     {
                         nuevoEstado = 24;
                     }
-                    nuevoEstado = F;
+                    else
+                    {
+                        nuevoEstado = F;
+                    }
                     break;
 
                 case 24:
@@ -361,7 +387,10 @@ namespace Lexico_2
                     {
                         nuevoEstado = 24;
                     }
-                    nuevoEstado = F;
+                    else
+                    {
+                        nuevoEstado = F;
+                    }
                     break;
 
                 case 26:
@@ -370,7 +399,10 @@ namespace Lexico_2
                     {
                         nuevoEstado = 24;
                     }
-                    nuevoEstado = F;
+                    else
+                    {
+                        nuevoEstado = F;
+                    }
                     break;
 
                 case 27:
@@ -379,14 +411,15 @@ namespace Lexico_2
                     {
                         nuevoEstado = 27;
                     }
-                    else if (c == '"')
-                    {
-                        nuevoEstado = 28;
-                    }
                     else if (finArchivo())
                     {
                         nuevoEstado = E;
                     }
+                    else
+                    {
+                        nuevoEstado = 28;
+                    }
+
 
                     break;
 
@@ -416,48 +449,49 @@ namespace Lexico_2
                     break;
 
                 case 32:
-                    setClasificacion(Tipos.Caracter);
+
                     if (char.IsDigit(c))
                     {
                         nuevoEstado = 32;
                     }
-                    nuevoEstado = F;
+                    else
+                    {
+                        setClasificacion(Tipos.Caracter);
+                        nuevoEstado = F;
+                    }
                     break;
 
                 case 33:
                     nuevoEstado = F;
                     break;
 
-                case 34:
-                    if (c == '/')  
+                case 34: // primer "/"
+                    if (c == '/') // inicio de comentario con segundo "/"
                     {
-                        nuevoEstado = 35;
+                        nuevoEstado = 35; // irse al 35 
                     }
                     else if (c == '=')
                     {
-                        nuevoEstado = 17;  
+                        nuevoEstado = 17;
                     }
                     else if (c == '*')
                     {
-                        nuevoEstado = 36;  
+                        nuevoEstado = 36;
                     }
                     else
                     {
-                        setClasificacion(Tipos.OperadorFactor); 
-                        nuevoEstado = F; 
+                        setClasificacion(Tipos.OperadorFactor);
+                        nuevoEstado = F;
                     }
                     break;
 
                 case 35:
 
-                    if (c != '\n')
-                    {
-                        nuevoEstado = 35;
-                    }
-                    else
+                    if (c == '\n')
                     {
                         nuevoEstado = 0;
                     }
+
                     break;
 
                 case 36:
@@ -465,21 +499,23 @@ namespace Lexico_2
                     {
                         nuevoEstado = 37;
                     }
-                    nuevoEstado = 36;
+
                     break;
 
                 case 37:
                     if (c == '*')
                     {
-                        if (c == '/')
-                        {
-                            nuevoEstado = 0;
-                        }
-                        else
-                        {
-                            nuevoEstado = 36;
-                        }
+                        nuevoEstado = 37;
                     }
+                    else if (c == '/')
+                    {
+                        nuevoEstado = 0;
+                    }
+                    else
+                    {
+                        nuevoEstado = 36;
+                    }
+
                     break;
 
 
@@ -498,6 +534,10 @@ namespace Lexico_2
             int estado = 0;
             while (estado >= 0)
             {
+                if(estado == 0)
+                {
+                    buffer = "";
+                }
                 transicion = (char)archivo.Peek();
                 estado = automata(transicion, estado);
                 if (estado == E)
@@ -523,7 +563,7 @@ namespace Lexico_2
             if (!finArchivo())
             {
                 setContenido(buffer);
-                log.WriteLine(getContenido() + " = " + getClasificacion());
+                log.WriteLine(getContenido() + "    ---   " + getClasificacion());
             }
         }
         public bool finArchivo()
